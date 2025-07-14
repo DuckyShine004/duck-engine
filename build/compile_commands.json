@@ -1,0 +1,50 @@
+[
+{
+  "directory": "/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/build",
+  "command": "/usr/bin/g++ -DFMT_SHARED -DGLFW_INCLUDE_NONE -I/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/include -g -std=c++17 -o CMakeFiles/quaternion.dir/src/application/Application.cpp.o -c /home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/src/application/Application.cpp",
+  "file": "/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/src/application/Application.cpp",
+  "output": "CMakeFiles/quaternion.dir/src/application/Application.cpp.o"
+},
+{
+  "directory": "/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/build",
+  "command": "/usr/bin/gcc -DFMT_SHARED -DGLFW_INCLUDE_NONE -I/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/include -g -o CMakeFiles/quaternion.dir/src/external/glad/glad.c.o -c /home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/src/external/glad/glad.c",
+  "file": "/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/src/external/glad/glad.c",
+  "output": "CMakeFiles/quaternion.dir/src/external/glad/glad.c.o"
+},
+{
+  "directory": "/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/build",
+  "command": "/usr/bin/g++ -DFMT_SHARED -DGLFW_INCLUDE_NONE -I/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/include -g -std=c++17 -o CMakeFiles/quaternion.dir/src/logger/Entry.cpp.o -c /home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/src/logger/Entry.cpp",
+  "file": "/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/src/logger/Entry.cpp",
+  "output": "CMakeFiles/quaternion.dir/src/logger/Entry.cpp.o"
+},
+{
+  "directory": "/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/build",
+  "command": "/usr/bin/g++ -DFMT_SHARED -DGLFW_INCLUDE_NONE -I/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/include -g -std=c++17 -o CMakeFiles/quaternion.dir/src/logger/Logger.cpp.o -c /home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/src/logger/Logger.cpp",
+  "file": "/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/src/logger/Logger.cpp",
+  "output": "CMakeFiles/quaternion.dir/src/logger/Logger.cpp.o"
+},
+{
+  "directory": "/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/build",
+  "command": "/usr/bin/g++ -DFMT_SHARED -DGLFW_INCLUDE_NONE -I/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/include -g -std=c++17 -o CMakeFiles/quaternion.dir/src/main.cpp.o -c /home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/src/main.cpp",
+  "file": "/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/src/main.cpp",
+  "output": "CMakeFiles/quaternion.dir/src/main.cpp.o"
+},
+{
+  "directory": "/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/build",
+  "command": "/usr/bin/g++ -DFMT_SHARED -DGLFW_INCLUDE_NONE -I/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/include -g -std=c++17 -o CMakeFiles/quaternion.dir/src/utility/colour/ColourUtility.cpp.o -c /home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/src/utility/colour/ColourUtility.cpp",
+  "file": "/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/src/utility/colour/ColourUtility.cpp",
+  "output": "CMakeFiles/quaternion.dir/src/utility/colour/ColourUtility.cpp.o"
+},
+{
+  "directory": "/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/build",
+  "command": "/usr/bin/g++ -DFMT_SHARED -DGLFW_INCLUDE_NONE -I/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/include -g -std=c++17 -o CMakeFiles/quaternion.dir/src/utility/datetime/DatetimeUtility.cpp.o -c /home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/src/utility/datetime/DatetimeUtility.cpp",
+  "file": "/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/src/utility/datetime/DatetimeUtility.cpp",
+  "output": "CMakeFiles/quaternion.dir/src/utility/datetime/DatetimeUtility.cpp.o"
+},
+{
+  "directory": "/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/build",
+  "command": "/usr/bin/g++ -DFMT_SHARED -DGLFW_INCLUDE_NONE -I/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/include -g -std=c++17 -o CMakeFiles/quaternion.dir/src/utility/file/FileUtility.cpp.o -c /home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/src/utility/file/FileUtility.cpp",
+  "file": "/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/src/utility/file/FileUtility.cpp",
+  "output": "CMakeFiles/quaternion.dir/src/utility/file/FileUtility.cpp.o"
+}
+]
