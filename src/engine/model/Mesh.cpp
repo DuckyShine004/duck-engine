@@ -7,6 +7,33 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std:
 }
 
 void Mesh::draw(Shader &shader) {
+    unsigned int diffuseNumber = 1;
+    unsigned int specularNumber = 1;
+
+    for (unsigned int unit = 0; unit < this->_textures.size(); unit++) {
+        glActiveTexture(GL_TEXTURE0 + unit);
+
+        std::string number;
+        std::string name = this->_textures[unit].type;
+
+        if (name == "texture_diffuse") {
+            number = std::to_string(diffuseNumber++);
+        } else if (name == "texture_specular") {
+            number = std::to_string(specularNumber++);
+        }
+
+        std::string materialName = "material." + name + number;
+
+        shader.setInteger(materialName.c_str(), unit);
+
+        glBindTexture(GL_TEXTURE_2D, this->_textures[unit].id);
+    }
+
+    glActiveTexture(GL_TEXTURE0);
+
+    glBindVertexArray(this->_vao);
+    glDrawElements(GL_TRIANGLES, this->_indices.size(), GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
 }
 
 void Mesh::initialise() {

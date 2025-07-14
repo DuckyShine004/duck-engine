@@ -9,7 +9,6 @@ if(APPLE)
     list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/fmt")
 endif()
 
-# Find all source files
 file(GLOB_RECURSE QUATERNION_SOURCES
     "${CMAKE_SOURCE_DIR}/src/*.cpp"
     "${CMAKE_SOURCE_DIR}/src/*.c"

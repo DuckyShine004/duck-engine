@@ -19,6 +19,8 @@ class Shader {
     void use();
     void detach();
 
+    void setInteger(const GLchar *name, int value);
+
     void setMatrix4fv(const GLchar *name, glm::mat4 matrix);
 
   private:
