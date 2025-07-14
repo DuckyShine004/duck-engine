@@ -1,3 +1,0 @@
-/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/build/CMakeFiles/quaternion.dir
-/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/build/CMakeFiles/edit_cache.dir
-/home/duckyshine04/Documents/work/projects/cpp-projects/quaternion-rotation-opengl/build/CMakeFiles/rebuild_cache.dir
