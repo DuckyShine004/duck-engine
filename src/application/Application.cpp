@@ -1,14 +1,19 @@
+#define STB_IMAGE_IMPLEMENTATION
+
 #include "external/glad/glad.h"
 
 #include "application/Application.hpp"
 
 #include "logger/LoggerMacros.hpp"
 
+#include <stb/stb_image.h>
+
 #include <iostream>
 
 namespace application {
 
 Application::Application() : _lastTime(0.0f), _framesPerSecond(0.0f) {
+    stbi_set_flip_vertically_on_load(true);
 }
 
 void Application::initialise() {
@@ -23,6 +28,7 @@ void Application::initialise() {
 #endif
 
     GLFWmonitor *monitor = glfwGetPrimaryMonitor();
+
     const GLFWvidmode *mode = glfwGetVideoMode(monitor);
 
     glfwWindowHint(GLFW_RED_BITS, mode->redBits);
@@ -30,7 +36,7 @@ void Application::initialise() {
     glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
     glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 
-    GLFWwindow *window = glfwCreateWindow(mode->width, mode->height, "Quaternion", monitor, nullptr);
+    GLFWwindow *window = glfwCreateWindow(1280, 720, "Quaternion", nullptr, nullptr);
 
     if (window == nullptr) {
         std::cout << "Failed to create window" << std::endl;

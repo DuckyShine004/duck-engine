@@ -1,7 +1,7 @@
-#define STB_IMAGE_IMPLEMENTATION
-
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
+
+#include <stb/stb_image.h>
 
 #include "engine/model/Model.hpp"
 
@@ -9,7 +9,7 @@
 
 namespace engine::model {
 
-Model::Model(char *path) {
+Model::Model(std::string path) {
     this->loadModel(path);
 }
 
