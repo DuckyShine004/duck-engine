@@ -17,6 +17,7 @@ file(GLOB_RECURSE QUATERNION_SOURCES
 find_package(PkgConfig REQUIRED)
 
 find_package(fmt REQUIRED)
+find_package(assimp REQUIRED)
 find_package(glfw3 3.3 REQUIRED)
 
 add_executable(quaternion ${QUATERNION_SOURCES})
@@ -33,8 +34,9 @@ target_compile_definitions(quaternion
 
 target_link_libraries(quaternion
     PRIVATE
-    glfw
     fmt
+    glfw
+    assimp
 )
 
 target_link_libraries(quaternion
