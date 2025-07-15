@@ -1,6 +1,10 @@
 #pragma once
 
+#include "engine/scene/Scene.hpp"
+
 #include <GLFW/glfw3.h>
+
+using namespace engine::scene;
 
 namespace application {
 
@@ -16,6 +20,8 @@ class Application {
 
   private:
     GLFWwindow *_window;
+
+    Scene _scene;
 
     float _lastTime;
 

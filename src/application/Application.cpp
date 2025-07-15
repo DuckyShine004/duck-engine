@@ -70,6 +70,8 @@ void Application::load() {
     glfwGetFramebufferSize(this->_window, &width, &height);
 
     this->setWindowSize(width, height);
+
+    this->_scene.load();
 }
 
 void Application::run() {

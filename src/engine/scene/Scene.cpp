@@ -1,15 +1,19 @@
 #include "engine/scene/Scene.hpp"
 
+#include "logger/LoggerMacros.hpp"
+
 namespace engine::scene {
 
-Scene::Scene() {
-    this->initialise();
-}
+Scene::Scene() = default;
 
-void Scene::initialise() {
+void Scene::load() {
     this->_shader = Shader("shaders/scene/scene");
 
-    this->_models.push_back(Model("resources/models/duck.obj"));
+    LOG_DEBUG("Loading models");
+
+    Model model("resources/models/duck.obj");
+
+    this->_models.push_back(model);
 }
 
 void Scene::render() {

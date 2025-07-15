@@ -24,7 +24,7 @@ void Model::loadModel(std::string path) {
 
     const aiScene *scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
 
-    if (!scene || scene->mFlags && AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
+    if (!scene || (scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE) || !scene->mRootNode) {
         LOG_ERROR("Assimp Import Error: {}", importer.GetErrorString());
         return;
     }
@@ -32,9 +32,12 @@ void Model::loadModel(std::string path) {
     this->_directory = path.substr(0, path.find_last_of('/'));
 
     this->processNode(scene->mRootNode, scene);
+
+    LOG_DEBUG("Finished processing model nodes");
 }
 
 void Model::processNode(aiNode *node, const aiScene *scene) {
+    LOG_DEBUG("Visiting node '{}' ({} meshes, {} children)", node->mName.C_Str(), node->mNumMeshes, node->mNumChildren);
     for (unsigned int i = 0; i < node->mNumMeshes; i++) {
         aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
 
@@ -53,12 +56,18 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
 
     std::vector<Texture> textures;
 
+    LOG_DEBUG("Processing model vertices");
+
     // Proc vertices
     for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
         Vertex vertex;
 
         vertex.position = glm::vec3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
-        vertex.normal = glm::vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
+
+        if (mesh->HasNormals()) {
+            vertex.normal = glm::vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
+        }
+
         vertex.textureCoordinates = glm::vec2(0.0f, 0.0f);
 
         if (mesh->mTextureCoords[0]) {
@@ -69,6 +78,8 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
         vertices.push_back(vertex);
     }
 
+    LOG_DEBUG("Processing model indices");
+
     // Proc indices
     for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
         aiFace face = mesh->mFaces[i];
@@ -77,6 +88,8 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
             indices.push_back(face.mIndices[j]);
         }
     }
+
+    LOG_DEBUG("Processing model materials");
 
     // Proc materials
     if (mesh->mMaterialIndex >= 0) {
@@ -90,6 +103,8 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
 
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
     }
+
+    LOG_DEBUG("Finished processing model mesh");
 
     return Mesh(vertices, indices, textures);
 }
@@ -148,7 +163,7 @@ unsigned int Model::getTextureIdFromFile(const char *path, const std::string &di
 
         if (components == 1) {
             format = GL_RED;
-        } else if (components == 2) {
+        } else if (components == 3) {
             format = GL_RGB;
         } else if (components == 4) {
             format = GL_RGBA;

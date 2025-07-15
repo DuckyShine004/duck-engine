@@ -14,14 +14,14 @@ class Scene {
   public:
     Scene();
 
+    void load();
+
     void render();
 
   private:
     Shader _shader;
 
     std::vector<Model> _models;
-
-    void initialise();
 };
 
 } // namespace engine::scene
