@@ -32,12 +32,9 @@ void Model::loadModel(std::string path) {
     this->_directory = path.substr(0, path.find_last_of('/'));
 
     this->processNode(scene->mRootNode, scene);
-
-    LOG_DEBUG("Finished processing model nodes");
 }
 
 void Model::processNode(aiNode *node, const aiScene *scene) {
-    LOG_DEBUG("Visiting node '{}' ({} meshes, {} children)", node->mName.C_Str(), node->mNumMeshes, node->mNumChildren);
     for (unsigned int i = 0; i < node->mNumMeshes; i++) {
         aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
 
@@ -56,9 +53,6 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
 
     std::vector<Texture> textures;
 
-    LOG_DEBUG("Processing model vertices");
-
-    // Proc vertices
     for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
         Vertex vertex;
 
@@ -78,9 +72,6 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
         vertices.push_back(vertex);
     }
 
-    LOG_DEBUG("Processing model indices");
-
-    // Proc indices
     for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
         aiFace face = mesh->mFaces[i];
 
@@ -89,9 +80,6 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
         }
     }
 
-    LOG_DEBUG("Processing model materials");
-
-    // Proc materials
     if (mesh->mMaterialIndex >= 0) {
         aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
 
@@ -103,8 +91,6 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
 
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
     }
-
-    LOG_DEBUG("Finished processing model mesh");
 
     return Mesh(vertices, indices, textures);
 }

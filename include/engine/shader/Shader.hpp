@@ -14,8 +14,6 @@ class Shader {
 
     Shader(const std::string &name);
 
-    void initialise();
-
     void use();
     void detach();
 
@@ -30,6 +28,8 @@ class Shader {
     GLuint _fragmentShader;
 
     GLuint _program;
+
+    void initialise();
 
     void createShaders();
     void compileShaders();

@@ -4,6 +4,8 @@
 
 #include "utility/file/FileUtility.hpp"
 
+#include "logger/LoggerMacros.hpp"
+
 #include <glm/gtc/type_ptr.hpp>
 
 #include <iostream>
@@ -16,6 +18,8 @@ Shader::Shader() = default;
 
 Shader::Shader(const std::string &name) : _name(name) {
     this->_name = name;
+
+    this->initialise();
 }
 
 void Shader::initialise() {
@@ -90,7 +94,7 @@ void Shader::checkCompilationStatus(GLuint shader) {
     if (status == GL_FALSE) {
         glGetShaderInfoLog(shader, 512, nullptr, infoLog);
 
-        std::cout << "Compile Error\n" << infoLog << std::endl;
+        LOG_ERROR("Compile Error: \n {}", infoLog);
     }
 }
 
@@ -104,7 +108,7 @@ void Shader::checkProgramLinkStatus() {
     if (status == GL_FALSE) {
         glGetProgramInfoLog(this->_program, 512, nullptr, infoLog);
 
-        std::cout << "Link Error\n" << infoLog << std::endl;
+        LOG_ERROR("Link Error: \n {}", infoLog);
     }
 }
 

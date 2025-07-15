@@ -9,8 +9,6 @@ Scene::Scene() = default;
 void Scene::load() {
     this->_shader = Shader("shaders/scene/scene");
 
-    LOG_DEBUG("Loading models");
-
     Model model("resources/models/duck.obj");
 
     this->_models.push_back(model);
