@@ -72,6 +72,8 @@ void Application::load() {
     this->setWindowSize(width, height);
 
     this->_scene.load();
+
+    this->_scene.updateResolution(width, height);
 }
 
 void Application::run() {
@@ -99,6 +101,8 @@ void Application::render() {
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
     glClear(GL_COLOR_BUFFER_BIT);
+
+    this->_scene.render();
 }
 
 void Application::onResize(GLFWwindow *window, int width, int height) {
@@ -107,6 +111,8 @@ void Application::onResize(GLFWwindow *window, int width, int height) {
 
 void Application::setWindowSize(int width, int height) {
     glViewport(0, 0, width, height);
+
+    this->_scene.updateResolution(width, height);
 }
 
 } // namespace application
