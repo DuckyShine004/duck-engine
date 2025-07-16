@@ -18,8 +18,9 @@ void Scene::load() {
     this->_models.push_back(model);
 }
 
-void Scene::update() {
-    this->_camera.updateModelViewProjection();
+void Scene::update(GLFWwindow *window, float deltaTime) {
+    // this->_camera.updateModelViewProjection();
+    this->_camera.update(window, deltaTime);
 }
 
 void Scene::updateResolution(int width, int height) {

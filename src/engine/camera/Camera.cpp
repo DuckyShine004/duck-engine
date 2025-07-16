@@ -31,30 +31,74 @@ void Camera::updateProjection() {
 }
 
 void Camera::updateView() {
-    this->_viewComponents.front = glm::normalize(this->_rotation.direction);
-
-    this->_viewComponents.right = glm::cross(this->_viewComponents.front, this->_viewComponents.up);
-
     this->_mvp.view = glm::lookAt(this->_position, this->_position + this->_viewComponents.front, this->_viewComponents.up);
 }
 
-void Camera::update() {
+void Camera::update(GLFWwindow *window, float deltaTime) {
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+        this->move(FORWARD, deltaTime);
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+        this->move(BACKWARD, deltaTime);
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+        this->move(RIGHT, deltaTime);
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+        this->move(LEFT, deltaTime);
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+        this->move(UP, deltaTime);
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+        this->move(DOWN, deltaTime);
+    }
 }
 
-void Camera::updateModelViewProjection() {
-    glm::vec3 camPos = {0, 0, 3};
-    glm::vec3 camTarget = {0, 0, 0};
-    glm::vec3 up = {0, 1, 0};
-
-    this->_mvp.model = glm::mat4(1.0f);
-    this->_mvp.model = glm::translate(this->_mvp.model, glm::vec3(0.0f, -3.0f, -5.0f));
-    // this->_mvp.view = glm::lookAt(camPos, camTarget, up);
-}
+// void Camera::updateModelViewProjection() {
+//     this->_mvp.model = glm::mat4(1.0f);
+//     this->_mvp.model = glm::translate(this->_mvp.model, glm::vec3(0.0f, -3.0f, -7.0f));
+// }
 
 void Camera::uploadModelViewProjection(Shader &shader) {
     shader.setMatrix4fv("uModel", this->_mvp.model);
     shader.setMatrix4fv("uView", this->_mvp.view);
     shader.setMatrix4fv("uProjection", this->_mvp.projection);
+}
+
+void Camera::move(Direction direction, float deltaTime) {
+    float velocity = (this->_SPEED / 1000.0f) * deltaTime;
+
+    if (direction == FORWARD) {
+        this->_position += this->_viewComponents.front * velocity;
+    }
+
+    if (direction == BACKWARD) {
+        this->_position -= this->_viewComponents.front * velocity;
+    }
+
+    if (direction == LEFT) {
+        this->_position -= this->_viewComponents.right * velocity;
+    }
+
+    if (direction == RIGHT) {
+        this->_position += this->_viewComponents.right * velocity;
+    }
+
+    if (direction == UP) {
+        this->_position += this->_viewComponents.up * velocity;
+    }
+
+    if (direction == DOWN) {
+        this->_position -= this->_viewComponents.up * velocity;
+    }
+
+    this->updateView();
 }
 
 void Camera::rotate(glm::vec2 cursorPosition) {
@@ -75,6 +119,9 @@ void Camera::rotate(glm::vec2 cursorPosition) {
     this->_rotation.direction.x = glm::cos(theta) * glm::cos(omega);
     this->_rotation.direction.y = glm::sin(omega);
     this->_rotation.direction.z = glm::sin(theta) * glm::cos(omega);
+
+    this->_viewComponents.front = glm::normalize(this->_rotation.direction);
+    this->_viewComponents.right = glm::cross(this->_viewComponents.front, this->_viewComponents.up);
 }
 
 glm::vec2 Camera::getCursorOffset(glm::vec2 cursorPosition) {

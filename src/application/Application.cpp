@@ -10,6 +10,8 @@
 
 #include <iostream>
 
+#include <GLFW/glfw3.h>
+
 namespace application {
 
 Application::Application() : _lastTime(0.0f), _framesPerSecond(0.0f) {
@@ -110,7 +112,7 @@ void Application::update() {
 
     float deltaTime = time - this->_lastTime;
 
-    this->_scene.update();
+    this->_scene.update(this->_window, deltaTime);
 }
 
 void Application::render() {

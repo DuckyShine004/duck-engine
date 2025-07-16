@@ -6,6 +6,8 @@
 
 #include "engine/camera/Camera.hpp"
 
+#include <GLFW/glfw3.h>
+
 using namespace engine::shader;
 
 using namespace engine::model;
@@ -20,7 +22,7 @@ class Scene {
 
     void load();
 
-    void update();
+    void update(GLFWwindow *window, float deltaTime);
 
     void updateResolution(int width, int height);
 

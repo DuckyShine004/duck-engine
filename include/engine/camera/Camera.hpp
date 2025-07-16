@@ -2,11 +2,22 @@
 
 #include "engine/shader/Shader.hpp"
 
+#include <GLFW/glfw3.h>
+
 #include <glm/glm.hpp>
 
 using namespace engine::shader;
 
 namespace engine::camera {
+
+enum Direction {
+    FORWARD,
+    BACKWARD,
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN,
+};
 
 struct Rotation {
     float yaw;
@@ -44,15 +55,15 @@ class Camera {
 
     Camera(float x, float y, float z);
 
-    void update();
+    void update(GLFWwindow *window, float deltaTime);
 
     void updateView();
 
     void updateProjection();
 
-    void updateModelViewProjection();
-
     void uploadModelViewProjection(Shader &shader);
+
+    void move(Direction direction, float deltaTime);
 
     void rotate(glm::vec2 cursorPosition);
 
@@ -67,7 +78,9 @@ class Camera {
     const float _YAW = 90.0f;
     const float _PITCH = 0.0f;
     const float _PITCH_LIMIT = 89.0f;
-    const float _SENSITIVITY = 0.05f;
+    const float _SENSITIVITY = 0.025f;
+
+    const float _SPEED = 2.5f;
 
     ModelViewProjection _mvp;
 
