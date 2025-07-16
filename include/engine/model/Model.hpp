@@ -35,6 +35,16 @@ class Model {
     std::vector<Texture> loadTexturesFromMaterial(aiMaterial *material, aiTextureType type, std::string name);
 
     unsigned int getTextureIdFromFile(const char *path, const std::string &directory);
+
+    unsigned int getTextureIdFromColour(aiColor3D colour);
+
+    void loadDiffuseMaps(aiMaterial *material, std::vector<Texture> &textures);
+
+    void loadSpecularMaps(aiMaterial *material, std::vector<Texture> &textures);
+
+    Texture createDiffuseTexture(aiMaterial *material);
+
+    std::vector<unsigned char> getPixelFromColour(aiColor3D colour);
 };
 
 } // namespace engine::model

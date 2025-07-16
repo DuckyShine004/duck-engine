@@ -85,16 +85,68 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
     // if (mesh->mMaterialIndex >= 0) {
     aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
 
-    std::vector<Texture> diffuseMaps = this->loadTexturesFromMaterial(material, aiTextureType_DIFFUSE, "texture_diffuse");
-
-    textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-
-    std::vector<Texture> specularMaps = this->loadTexturesFromMaterial(material, aiTextureType_SPECULAR, "texture_specular");
-
-    textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+    this->loadDiffuseMaps(material, textures);
+    this->loadSpecularMaps(material, textures);
     // }
 
     return Mesh(vertices, indices, textures);
+}
+
+void Model::loadDiffuseMaps(aiMaterial *material, std::vector<Texture> &textures) {
+    std::vector<Texture> diffuseMaps = this->loadTexturesFromMaterial(material, aiTextureType_DIFFUSE, "texture_diffuse");
+
+    if (diffuseMaps.empty()) {
+        diffuseMaps.push_back(this->createDiffuseTexture(material));
+    }
+
+    textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+}
+
+Texture Model::createDiffuseTexture(aiMaterial *material) {
+    aiColor3D diffuseColour(1.0f, 1.0f, 1.0f);
+
+    material->Get(AI_MATKEY_COLOR_DIFFUSE, diffuseColour);
+
+    Texture texture;
+
+    texture.id = this->getTextureIdFromColour(diffuseColour);
+    texture.type = "texture_diffuse";
+    texture.path = "";
+
+    return texture;
+}
+
+unsigned int Model::getTextureIdFromColour(aiColor3D colour) {
+    std::vector<unsigned char> pixel = this->getPixelFromColour(colour);
+
+    unsigned int textureId;
+
+    glGenTextures(1, &textureId);
+
+    glBindTexture(GL_TEXTURE_2D, textureId);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1, 1, 0, GL_RGB, GL_UNSIGNED_BYTE, pixel.data());
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    return textureId;
+}
+
+std::vector<unsigned char> Model::getPixelFromColour(aiColor3D colour) {
+    std::vector<unsigned char> pixel(3);
+
+    pixel[0] = static_cast<unsigned char>(colour.r * 255);
+    pixel[1] = static_cast<unsigned char>(colour.g * 255);
+    pixel[2] = static_cast<unsigned char>(colour.b * 255);
+
+    return pixel;
+}
+
+void Model::loadSpecularMaps(aiMaterial *material, std::vector<Texture> &textures) {
+    std::vector<Texture> specularMaps = this->loadTexturesFromMaterial(material, aiTextureType_SPECULAR, "texture_specular");
+
+    textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 }
 
 std::vector<Texture> Model::loadTexturesFromMaterial(aiMaterial *material, aiTextureType type, std::string name) {
@@ -138,7 +190,7 @@ std::vector<Texture> Model::loadTexturesFromMaterial(aiMaterial *material, aiTex
 unsigned int Model::getTextureIdFromFile(const char *path, const std::string &directory) {
     std::string filename = directory + '/' + std::string(path);
 
-    unsigned int textureId;
+    unsigned textureId;
 
     glGenTextures(1, &textureId);
 
