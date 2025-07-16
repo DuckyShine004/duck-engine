@@ -112,6 +112,8 @@ void Application::update() {
 
     float deltaTime = time - this->_lastTime;
 
+    this->_lastTime = time;
+
     this->_scene.update(this->_window, deltaTime);
 }
 

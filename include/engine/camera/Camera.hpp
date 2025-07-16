@@ -80,7 +80,7 @@ class Camera {
     const float _PITCH_LIMIT = 89.0f;
     const float _SENSITIVITY = 0.025f;
 
-    const float _SPEED = 2.5f;
+    const float _SPEED = 10.0f;
 
     ModelViewProjection _mvp;
 

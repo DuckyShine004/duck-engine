@@ -13,7 +13,7 @@ Scene::Scene() = default;
 void Scene::load() {
     this->_shader = Shader("shaders/scene/scene");
 
-    Model model("resources/models/duck.obj");
+    Model model("resources/models/Duck.obj");
 
     this->_models.push_back(model);
 }

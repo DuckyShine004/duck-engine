@@ -72,7 +72,7 @@ void Camera::uploadModelViewProjection(Shader &shader) {
 }
 
 void Camera::move(Direction direction, float deltaTime) {
-    float velocity = (this->_SPEED / 1000.0f) * deltaTime;
+    float velocity = this->_SPEED * deltaTime;
 
     if (direction == FORWARD) {
         this->_position += this->_viewComponents.front * velocity;

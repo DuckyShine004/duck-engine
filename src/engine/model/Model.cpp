@@ -82,23 +82,25 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
         }
     }
 
-    if (mesh->mMaterialIndex >= 0) {
-        aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
+    // if (mesh->mMaterialIndex >= 0) {
+    aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
 
-        std::vector<Texture> diffuseMaps = this->loadTexturesFromMaterial(material, aiTextureType_DIFFUSE, "texture_diffuse");
+    std::vector<Texture> diffuseMaps = this->loadTexturesFromMaterial(material, aiTextureType_DIFFUSE, "texture_diffuse");
 
-        textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+    textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
-        std::vector<Texture> specularMaps = this->loadTexturesFromMaterial(material, aiTextureType_SPECULAR, "texture_specular");
+    std::vector<Texture> specularMaps = this->loadTexturesFromMaterial(material, aiTextureType_SPECULAR, "texture_specular");
 
-        textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-    }
+    textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+    // }
 
     return Mesh(vertices, indices, textures);
 }
 
 std::vector<Texture> Model::loadTexturesFromMaterial(aiMaterial *material, aiTextureType type, std::string name) {
     std::vector<Texture> textures;
+
+    LOG_DEBUG("Material count: {}", material->GetTextureCount(type));
 
     for (unsigned int i = 0; i < material->GetTextureCount(type); i++) {
         bool isLoaded = false;
@@ -145,6 +147,8 @@ unsigned int Model::getTextureIdFromFile(const char *path, const std::string &di
     int components;
 
     unsigned char *data = stbi_load(filename.c_str(), &width, &height, &components, 0);
+
+    LOG_DEBUG("Loading texture from file: {}", filename);
 
     if (data) {
         GLenum format;
