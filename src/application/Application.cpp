@@ -97,12 +97,14 @@ void Application::update() {
     float time = glfwGetTime();
 
     float deltaTime = time - this->_lastTime;
+
+    this->_scene.update();
 }
 
 void Application::render() {
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearColor(0.5f, 0.7f, 1.0f, 1.0f);
 
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     this->_scene.render();
 }

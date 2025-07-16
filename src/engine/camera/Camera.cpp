@@ -21,7 +21,7 @@ void Camera::updateAspectRatio() {
 
     float fieldOfView = glm::radians(this->_FIELD_OF_VIEW);
 
-    this->_mvp.projection = glm::perspective(fieldOfView, 1280.0f / 720.0f, this->_NEAR, this->_FAR);
+    this->_mvp.projection = glm::perspective(fieldOfView, aspectRatio, this->_NEAR, this->_FAR);
 }
 
 void Camera::update() {
@@ -29,6 +29,12 @@ void Camera::update() {
 }
 
 void Camera::updateModelViewProjectionMatrices() {
+    glm::vec3 camPos = {0, 0, 3};
+    glm::vec3 camTarget = {0, 0, 0};
+    glm::vec3 up = {0, 1, 0};
+
+    this->_mvp.model = glm::mat4(1.0f);
+    this->_mvp.view = glm::lookAt(camPos, camTarget, up);
 }
 
 void Camera::uploadModelViewProjectionMatrices(Shader &shader) {
