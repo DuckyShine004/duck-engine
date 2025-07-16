@@ -26,6 +26,8 @@ class Scene {
 
     void render();
 
+    Camera &getCamera();
+
   private:
     Shader _shader;
 

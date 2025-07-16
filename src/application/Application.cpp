@@ -60,6 +60,18 @@ void Application::initialise() {
         application->onResize(window, width, height);
     });
 
+    glfwSetCursorPosCallback(window, [](GLFWwindow *window, double x, double y) {
+        Application *application = static_cast<Application *>(glfwGetWindowUserPointer(window));
+
+        application->onCursor(window, x, y);
+    });
+
+    glfwSetKeyCallback(window, [](GLFWwindow *window, int key, int scanmode, int action, int mods) {
+        Application *application = static_cast<Application *>(glfwGetWindowUserPointer(window));
+
+        application->onKeyPress(window, key, scanmode, action, mods);
+    });
+
     this->_window = window;
 }
 
@@ -111,6 +123,34 @@ void Application::render() {
 
 void Application::onResize(GLFWwindow *window, int width, int height) {
     this->setWindowSize(width, height);
+}
+
+void Application::onCursor(GLFWwindow *window, double x, double y) {
+    Camera &camera = this->_scene.getCamera();
+
+    camera.rotate(glm::vec2(x, y));
+
+    camera.updateView();
+}
+
+void Application::onKeyPress(GLFWwindow *window, int key, int scanmode, int action, int mods) {
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+        glfwSetWindowShouldClose(window, true);
+    }
+
+    if (key == GLFW_KEY_E && action == GLFW_PRESS) {
+        this->toggleCursor();
+    }
+}
+
+void Application::toggleCursor() {
+    int cursorMode = glfwGetInputMode(this->_window, GLFW_CURSOR);
+
+    if (cursorMode == GLFW_CURSOR_DISABLED) {
+        glfwSetInputMode(this->_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    } else {
+        glfwSetInputMode(this->_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    }
 }
 
 void Application::setWindowSize(int width, int height) {

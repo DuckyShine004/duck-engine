@@ -19,24 +19,28 @@ void Scene::load() {
 }
 
 void Scene::update() {
-    this->_camera.updateModelViewProjectionMatrices();
+    this->_camera.updateModelViewProjection();
 }
 
 void Scene::updateResolution(int width, int height) {
     DisplayManager::getInstance().updateResolution(width, height);
 
-    this->_camera.updateAspectRatio();
+    this->_camera.updateProjection();
 }
 
 void Scene::render() {
     this->_shader.use();
 
     // Set uniforms or what not before drawing
-    this->_camera.uploadModelViewProjectionMatrices(this->_shader);
+    this->_camera.uploadModelViewProjection(this->_shader);
 
     for (Model &model : this->_models) {
         model.draw(this->_shader);
     }
+}
+
+Camera &Scene::getCamera() {
+    return this->_camera;
 }
 
 } // namespace engine::scene
