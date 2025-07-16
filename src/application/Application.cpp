@@ -79,6 +79,8 @@ void Application::load() {
 void Application::run() {
     glfwSwapInterval(0);
 
+    glEnable(GL_DEPTH_TEST);
+
     while (!glfwWindowShouldClose(this->_window)) {
         this->update();
 

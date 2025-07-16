@@ -1,6 +1,10 @@
 #include "engine/scene/Scene.hpp"
 
+#include "manager/display/DisplayManager.hpp"
+
 #include "logger/LoggerMacros.hpp"
+
+using namespace manager::display;
 
 namespace engine::scene {
 
@@ -14,15 +18,21 @@ void Scene::load() {
     this->_models.push_back(model);
 }
 
+void Scene::update() {
+    this->_camera.updateModelViewProjectionMatrices();
+}
+
 void Scene::updateResolution(int width, int height) {
-    this->_camera.updateAspectRatio(width, height);
+    DisplayManager::getInstance().updateResolution(width, height);
+
+    this->_camera.updateAspectRatio();
 }
 
 void Scene::render() {
     this->_shader.use();
 
     // Set uniforms or what not before drawing
-    this->_shader.setMatrix4fv("uProjection", this->_camera.getProjectionMatrix());
+    this->_camera.uploadModelViewProjectionMatrices(this->_shader);
 
     for (Model &model : this->_models) {
         model.draw(this->_shader);

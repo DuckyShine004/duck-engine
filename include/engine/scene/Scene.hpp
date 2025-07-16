@@ -20,9 +20,11 @@ class Scene {
 
     void load();
 
-    void render();
+    void update();
 
     void updateResolution(int width, int height);
+
+    void render();
 
   private:
     Shader _shader;
@@ -30,6 +32,8 @@ class Scene {
     Camera _camera;
 
     std::vector<Model> _models;
+
+    float _aspectRatio;
 };
 
 } // namespace engine::scene

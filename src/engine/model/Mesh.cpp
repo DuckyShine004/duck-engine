@@ -22,18 +22,18 @@ void Mesh::draw(Shader &shader) {
             number = std::to_string(specularNumber++);
         }
 
-        std::string materialName = "material." + name + number;
+        std::string materialName = name + number;
 
         shader.setInteger(materialName.c_str(), unit);
 
         glBindTexture(GL_TEXTURE_2D, this->_textures[unit].id);
     }
 
-    glActiveTexture(GL_TEXTURE0);
-
     glBindVertexArray(this->_vao);
     glDrawElements(GL_TRIANGLES, this->_indices.size(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+
+    glActiveTexture(GL_TEXTURE0);
 }
 
 void Mesh::initialise() {

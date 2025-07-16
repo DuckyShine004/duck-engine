@@ -58,6 +58,8 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
 
         vertex.position = glm::vec3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
 
+        // LOG_DEBUG("Position: ({}, {}, {})", vertex.position.x, vertex.position.y, vertex.position.z);
+
         if (mesh->HasNormals()) {
             vertex.normal = glm::vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
         }
