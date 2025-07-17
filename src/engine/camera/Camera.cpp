@@ -11,6 +11,9 @@ using namespace manager::display;
 namespace engine::camera {
 
 Camera::Camera() : _position(glm::vec3(0.0f)) {
+    // glm::mat4 model = glm::mat4(1.0f);
+    // model = glm::scale(model, glm::vec3(20.0f, 20.0f, 20.0f));
+    // this->_mvp.model = model;
     this->_lastCursorPosition = glm::vec2(-1.0f, -1.0f);
 }
 
@@ -35,6 +38,7 @@ void Camera::updateView() {
 }
 
 void Camera::update(GLFWwindow *window, float deltaTime) {
+    this->_mvp.model = glm::rotate(this->_mvp.model, glm::radians(50.0f) * deltaTime, glm::vec3(0.0f, 1.0f, 0.0f));
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
         this->move(FORWARD, deltaTime);
@@ -67,9 +71,6 @@ void Camera::uploadViewProjection(Shader &shader) {
 }
 
 void Camera::uploadModelViewProjection(Shader &shader) {
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::scale(model, glm::vec3(0.5f));
-    this->_mvp.model = model;
 
     shader.setMatrix4fv("uModel", this->_mvp.model);
     shader.setMatrix4fv("uView", this->_mvp.view);

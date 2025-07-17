@@ -58,8 +58,6 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
 
         vertex.position = glm::vec3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
 
-        // LOG_DEBUG("Position: ({}, {}, {})", vertex.position.x, vertex.position.y, vertex.position.z);
-
         if (mesh->HasNormals()) {
             vertex.normal = glm::vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
         }
@@ -82,14 +80,38 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
         }
     }
 
-    // if (mesh->mMaterialIndex >= 0) {
+    // Textures
     aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
 
     this->loadDiffuseMaps(material, textures);
     this->loadSpecularMaps(material, textures);
-    // }
 
-    return Mesh(vertices, indices, textures);
+    // Material properties
+    Material _material = this->loadMaterial(material);
+
+    return Mesh(vertices, indices, textures, _material);
+}
+
+Material Model::loadMaterial(aiMaterial *material) {
+    Material _material;
+
+    aiColor3D colour(0.0f, 0.0f, 0.0f);
+
+    float shininess;
+
+    material->Get(AI_MATKEY_COLOR_DIFFUSE, colour);
+    _material.diffuse = glm::vec3(colour.r, colour.g, colour.b);
+
+    material->Get(AI_MATKEY_COLOR_AMBIENT, colour);
+    _material.ambient = glm::vec3(colour.r, colour.g, colour.b);
+
+    material->Get(AI_MATKEY_COLOR_SPECULAR, colour);
+    _material.specular = glm::vec3(colour.r, colour.g, colour.b);
+
+    material->Get(AI_MATKEY_SHININESS, shininess);
+    _material.shininess = shininess;
+
+    return _material;
 }
 
 void Model::loadDiffuseMaps(aiMaterial *material, std::vector<Texture> &textures) {

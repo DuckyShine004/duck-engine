@@ -4,6 +4,10 @@
 
 #include "engine/shader/Shader.hpp"
 
+#include "engine/model/Vertex.hpp"
+#include "engine/model/Texture.hpp"
+#include "engine/model/Material.hpp"
+
 #include <glm/glm.hpp>
 
 #include <string>
@@ -13,23 +17,9 @@ using namespace engine::shader;
 
 namespace engine::model {
 
-struct Vertex {
-    glm::vec3 position;
-    glm::vec3 normal;
-
-    glm::vec2 textureCoordinates;
-};
-
-struct Texture {
-    unsigned int id;
-
-    std::string type;
-    std::string path;
-};
-
 class Mesh {
   public:
-    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
+    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, Material material);
 
     void draw(Shader &shader);
 
@@ -43,6 +33,8 @@ class Mesh {
     std::vector<unsigned int> _indices;
 
     std::vector<Texture> _textures;
+
+    Material _material;
 
     void initialise();
 };

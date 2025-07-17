@@ -3,6 +3,7 @@
 #include "engine/shader/Shader.hpp"
 
 #include "engine/model/Mesh.hpp"
+#include "engine/model/Material.hpp"
 
 #include <assimp/scene.h>
 
@@ -37,6 +38,8 @@ class Model {
     unsigned int getTextureIdFromFile(const char *path, const std::string &directory);
 
     unsigned int getTextureIdFromColour(aiColor3D colour);
+
+    Material loadMaterial(aiMaterial *material);
 
     void loadDiffuseMaps(aiMaterial *material, std::vector<Texture> &textures);
 

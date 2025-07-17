@@ -40,19 +40,15 @@ void Scene::render() {
     GLuint gridVAO;
 
     glGenVertexArrays(1, &gridVAO);
-    // No VBO needed: we'll generate positions in the vertex shader via gl_VertexID
     glDepthMask(GL_FALSE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glBindVertexArray(gridVAO);
 
-    // draw two triangles (6 vertices) using gl_VertexID to pull from your
-    // `const vec3 gridPlane[6]` array
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glDepthMask(GL_TRUE);
     glDisable(GL_BLEND);
 
-    // (Optional) unbind
     glBindVertexArray(0);
 
     Shader &shader = ShaderManager::getInstance().getShader("scene");
