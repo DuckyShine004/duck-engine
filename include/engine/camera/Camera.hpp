@@ -61,6 +61,8 @@ class Camera {
 
     void updateProjection();
 
+    void uploadViewProjection(Shader &shader);
+
     void uploadModelViewProjection(Shader &shader);
 
     void move(Direction direction, float deltaTime);

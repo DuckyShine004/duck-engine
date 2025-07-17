@@ -35,6 +35,7 @@ void Camera::updateView() {
 }
 
 void Camera::update(GLFWwindow *window, float deltaTime) {
+
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
         this->move(FORWARD, deltaTime);
     }
@@ -60,12 +61,16 @@ void Camera::update(GLFWwindow *window, float deltaTime) {
     }
 }
 
-// void Camera::updateModelViewProjection() {
-//     this->_mvp.model = glm::mat4(1.0f);
-//     this->_mvp.model = glm::translate(this->_mvp.model, glm::vec3(0.0f, -3.0f, -7.0f));
-// }
+void Camera::uploadViewProjection(Shader &shader) {
+    shader.setMatrix4fv("uView", this->_mvp.view);
+    shader.setMatrix4fv("uProjection", this->_mvp.projection);
+}
 
 void Camera::uploadModelViewProjection(Shader &shader) {
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::scale(model, glm::vec3(0.5f));
+    this->_mvp.model = model;
+
     shader.setMatrix4fv("uModel", this->_mvp.model);
     shader.setMatrix4fv("uView", this->_mvp.view);
     shader.setMatrix4fv("uProjection", this->_mvp.projection);
