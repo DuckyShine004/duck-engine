@@ -31,6 +31,22 @@ std::string FileUtility::getFilenameFromPath(const std::string &path) {
     return filename;
 }
 
+std::string FileUtility::getBasenameFromPath(const std::string &path) {
+    std::filesystem::path fullPath(path);
+
+    std::string basename = fullPath.stem().string();
+
+    return basename;
+}
+
+std::string FileUtility::getParentDirectory(const std::string &path) {
+    std::filesystem::path fullPath(path);
+
+    std::string parentDirectory = fullPath.parent_path().string();
+
+    return parentDirectory;
+}
+
 bool FileUtility::pathExists(const std::string &path) {
     return std::filesystem::exists(path);
 }

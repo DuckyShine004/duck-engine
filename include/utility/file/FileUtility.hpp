@@ -12,6 +12,10 @@ class FileUtility {
 
     static std::string getFilenameFromPath(const std::string &path);
 
+    static std::string getBasenameFromPath(const std::string &path);
+
+    static std::string getParentDirectory(const std::string &path);
+
     static bool pathExists(const std::string &path);
 
     static void createFile(const std::string &path);

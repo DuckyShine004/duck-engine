@@ -22,33 +22,36 @@ void ShaderManager::initialise() {
     std::vector<std::string> paths = FileUtility::getFilesInDirectory(this->_DIRECTORY);
 
     for (const std::string &path : paths) {
-        LOG_DEBUG("Shader path: {}", path);
         this->addShader(path);
     }
 }
 
-Shader *ShaderManager::getShader(const std::string &name) {
+Shader &ShaderManager::getShader(const std::string &name) {
     if (this->_shaders.find(name) == this->_shaders.end()) {
-        return nullptr;
+        std::terminate();
     }
 
-    return this->_shaders[name].get();
+    return *(this->_shaders.at(name));
 }
 
 void ShaderManager::addShader(const std::string &path) {
-    std::string filename = FileUtility::getFilenameFromPath(path);
+    std::string basename = FileUtility::getBasenameFromPath(path);
 
-    if (this->_shaders.find(filename) != this->_shaders.end()) {
-        LOG_WARN("Skipping shader: {}", path);
+    std::string parentDirectory = FileUtility::getParentDirectory(path);
+
+    std::string shaderPath = parentDirectory + '/' + basename;
+
+    if (this->_shaders.find(basename) != this->_shaders.end()) {
+        LOG_WARN("{} is already loaded, skipping...", path);
         return;
     }
 
-    std::string vertexShaderPath = filename + ".vert";
-    std::string fragmentShaderPath = filename + ".frag";
+    std::string vertexShaderPath = shaderPath + this->_VERTEX_SHADER_EXTENSION;
+    std::string fragmentShaderPath = shaderPath + this->_FRAGMENT_SHADER_EXTENSION;
 
     std::unique_ptr<Shader> shader = std::make_unique<Shader>(vertexShaderPath, fragmentShaderPath);
 
-    this->_shaders.emplace(filename, std::move(shader));
+    this->_shaders.emplace(basename, std::move(shader));
 }
 
 }; // namespace manager::shader

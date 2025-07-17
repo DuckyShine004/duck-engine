@@ -31,15 +31,15 @@ void Scene::updateResolution(int width, int height) {
 }
 
 void Scene::render() {
-    Shader *shader = ShaderManager::getInstance().getShader("scene");
+    Shader &shader = ShaderManager::getInstance().getShader("scene");
 
-    shader->use();
+    shader.use();
 
     // Set uniforms or what not before drawing
-    this->_camera.uploadModelViewProjection(*shader);
+    this->_camera.uploadModelViewProjection(shader);
 
     for (Model &model : this->_models) {
-        model.draw(*shader);
+        model.draw(shader);
     }
 }
 
