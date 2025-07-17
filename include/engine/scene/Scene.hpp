@@ -8,6 +8,8 @@
 
 #include <GLFW/glfw3.h>
 
+#include <map>
+
 using namespace engine::shader;
 
 using namespace engine::model;
@@ -31,13 +33,11 @@ class Scene {
     Camera &getCamera();
 
   private:
-    Shader _shader;
+    std::map<std::string, Shader> _shaders;
 
     Camera _camera;
 
     std::vector<Model> _models;
-
-    float _aspectRatio;
 };
 
 } // namespace engine::scene

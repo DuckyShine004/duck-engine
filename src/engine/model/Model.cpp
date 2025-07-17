@@ -152,8 +152,6 @@ void Model::loadSpecularMaps(aiMaterial *material, std::vector<Texture> &texture
 std::vector<Texture> Model::loadTexturesFromMaterial(aiMaterial *material, aiTextureType type, std::string name) {
     std::vector<Texture> textures;
 
-    LOG_DEBUG("Material count: {}", material->GetTextureCount(type));
-
     for (unsigned int i = 0; i < material->GetTextureCount(type); i++) {
         bool isLoaded = false;
 

@@ -1,5 +1,8 @@
-#include <utility/file/FileUtility.hpp>
+#include "utility/file/FileUtility.hpp"
 
+#include "logger/LoggerMacros.hpp"
+
+#include <stack>
 #include <sstream>
 #include <fstream>
 #include <filesystem>
@@ -58,6 +61,55 @@ void FileUtility::saveJson(const nlohmann::json &json, const std::string &path) 
     }
 
     file << std::setw(2) << json;
+}
+
+// Assume starts with name/
+std::vector<std::string> FileUtility::getFilesInDirectory(std::string directory) {
+    std::vector<std::string> files;
+
+    std::stack<std::string> directories;
+
+    directories.push(directory);
+
+    while (!directories.empty()) {
+        std::string directory = directories.top();
+
+        directories.pop();
+
+        if (!FileUtility::pathExists(directory)) {
+            continue;
+        }
+
+        std::vector<std::string> pathsInDirectory = FileUtility::getPathsInDirectory(directory);
+
+        for (std::string path : pathsInDirectory) {
+            if (FileUtility::isFile(path)) {
+                files.push_back(path);
+            } else if (FileUtility::isDirectory(path)) {
+                directories.push(path);
+            }
+        }
+    }
+
+    return files;
+}
+
+std::vector<std::string> FileUtility::getPathsInDirectory(std::string directory) {
+    std::vector<std::string> paths;
+
+    for (const auto &entry : std::filesystem::directory_iterator(directory)) {
+        paths.push_back(entry.path().string());
+    }
+
+    return paths;
+}
+
+bool FileUtility::isFile(const std::string &path) {
+    return std::filesystem::is_regular_file(path);
+}
+
+bool FileUtility::isDirectory(const std::string &path) {
+    return std::filesystem::is_directory(path);
 }
 
 } // namespace utility::file

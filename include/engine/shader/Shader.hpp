@@ -12,7 +12,7 @@ class Shader {
   public:
     Shader();
 
-    Shader(const std::string &name);
+    Shader(const std::string &vertexShaderPath, const std::string &fragmentShaderPath);
 
     void use();
     void detach();
@@ -22,7 +22,8 @@ class Shader {
     void setMatrix4fv(const GLchar *name, glm::mat4 matrix);
 
   private:
-    std::string _name;
+    std::string _vertexShaderPath;
+    std::string _fragmentShaderPath;
 
     GLuint _vertexShader;
     GLuint _fragmentShader;

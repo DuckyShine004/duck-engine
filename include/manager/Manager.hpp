@@ -8,6 +8,8 @@ class Manager {
 
     Manager &operator=(const Manager &) = delete;
 
+    virtual void initialise();
+
   protected:
     Manager();
 

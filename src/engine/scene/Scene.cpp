@@ -1,8 +1,12 @@
 #include "engine/scene/Scene.hpp"
 
+#include "manager/shader/ShaderManager.hpp"
+
 #include "manager/display/DisplayManager.hpp"
 
 #include "logger/LoggerMacros.hpp"
+
+using namespace manager::shader;
 
 using namespace manager::display;
 
@@ -11,15 +15,12 @@ namespace engine::scene {
 Scene::Scene() = default;
 
 void Scene::load() {
-    this->_shader = Shader("shaders/scene/scene");
-
     Model model("resources/models/Duck.obj");
 
     this->_models.push_back(model);
 }
 
 void Scene::update(GLFWwindow *window, float deltaTime) {
-    // this->_camera.updateModelViewProjection();
     this->_camera.update(window, deltaTime);
 }
 
@@ -30,13 +31,15 @@ void Scene::updateResolution(int width, int height) {
 }
 
 void Scene::render() {
-    this->_shader.use();
+    Shader *shader = ShaderManager::getInstance().getShader("scene");
+
+    shader->use();
 
     // Set uniforms or what not before drawing
-    this->_camera.uploadModelViewProjection(this->_shader);
+    this->_camera.uploadModelViewProjection(*shader);
 
     for (Model &model : this->_models) {
-        model.draw(this->_shader);
+        model.draw(*shader);
     }
 }
 

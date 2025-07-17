@@ -16,9 +16,7 @@ namespace engine::shader {
 
 Shader::Shader() = default;
 
-Shader::Shader(const std::string &name) : _name(name) {
-    this->_name = name;
-
+Shader::Shader(const std::string &vertexShaderPath, const std::string &fragmentShaderPath) : _vertexShaderPath(vertexShaderPath), _fragmentShaderPath(fragmentShaderPath) {
     this->initialise();
 }
 
@@ -43,8 +41,8 @@ void Shader::detach() {
 }
 
 void Shader::createShaders() {
-    std::string vertexShaderSource = FileUtility::getFileToString(this->_name + ".vert");
-    std::string fragmentShaderSource = FileUtility::getFileToString(this->_name + ".frag");
+    std::string vertexShaderSource = FileUtility::getFileToString(this->_vertexShaderPath);
+    std::string fragmentShaderSource = FileUtility::getFileToString(this->_fragmentShaderPath);
 
     const char *vertexShaderCode = vertexShaderSource.c_str();
     const char *fragmentShaderCode = fragmentShaderSource.c_str();
