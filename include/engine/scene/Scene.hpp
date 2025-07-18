@@ -28,6 +28,7 @@ class Scene {
 
     void updateResolution(int width, int height);
 
+    void renderGrid();
     void render();
 
     Camera &getCamera();

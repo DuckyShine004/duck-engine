@@ -10,8 +10,14 @@ uniform mat4 uProjection;
 
 out vec2 fTextureCoordinates;
 
+out vec3 fNormal;
+out vec3 fFragmentPosition;
+
 void main() {
     fTextureCoordinates = iTextureCoordinates;
+
+    fNormal = mat3(transpose(inverse(uModel))) * iNormals;
+    fFragmentPosition = vec3(uModel * vec4(iPosition, 1.0));
 
     gl_Position = uProjection * uView * uModel * vec4(iPosition, 1.0);
 }

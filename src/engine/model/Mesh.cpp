@@ -1,5 +1,7 @@
 #include "engine/model/Mesh.hpp"
 
+#include "logger/LoggerMacros.hpp"
+
 namespace engine::model {
 
 Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, Material material)
@@ -10,6 +12,18 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std:
 void Mesh::draw(Shader &shader) {
     unsigned int diffuseNumber = 1;
     unsigned int specularNumber = 1;
+
+    // Upload the materials
+    // LOG_DEBUG("Ambient: {}, {}, {}", this->_material.ambient.x, this->_material.ambient.y, this->_material.ambient.z);
+    // LOG_DEBUG("Diffuse: {}, {}, {}", this->_material.diffuse.x, this->_material.diffuse.y, this->_material.diffuse.z);
+    // LOG_DEBUG("Specular: {}, {}, {}", this->_material.specular.x, this->_material.specular.y, this->_material.specular.z);
+    // LOG_DEBUG("Shininess: {}", this->_material.shininess);
+
+    shader.setVector3f("material.ambient", this->_material.ambient);
+    shader.setVector3f("material.diffuse", this->_material.diffuse);
+    shader.setVector3f("material.specular", this->_material.specular);
+
+    shader.setFloat("material.shininess", this->_material.shininess);
 
     for (unsigned int unit = 0; unit < this->_textures.size(); unit++) {
         glActiveTexture(GL_TEXTURE0 + unit);

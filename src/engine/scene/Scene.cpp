@@ -1,10 +1,14 @@
 #include "engine/scene/Scene.hpp"
 
+#include "engine/light/Light.hpp"
+
 #include "manager/shader/ShaderManager.hpp"
 
 #include "manager/display/DisplayManager.hpp"
 
 #include "logger/LoggerMacros.hpp"
+
+using namespace engine::light;
 
 using namespace manager::shader;
 
@@ -30,12 +34,12 @@ void Scene::updateResolution(int width, int height) {
     this->_camera.updateProjection();
 }
 
-void Scene::render() {
-    Shader &tempshader = ShaderManager::getInstance().getShader("grid");
+void Scene::renderGrid() {
+    Shader &shader = ShaderManager::getInstance().getShader("grid");
 
-    tempshader.use();
+    shader.use();
 
-    this->_camera.uploadViewProjection(tempshader);
+    this->_camera.uploadViewProjection(shader);
 
     GLuint gridVAO;
 
@@ -50,13 +54,28 @@ void Scene::render() {
     glDisable(GL_BLEND);
 
     glBindVertexArray(0);
+}
 
+void Scene::render() {
+    this->renderGrid();
     Shader &shader = ShaderManager::getInstance().getShader("scene");
 
     shader.use();
 
     // Set uniforms or what not before drawing
     this->_camera.uploadModelViewProjection(shader);
+    shader.setVector3f("uViewPosition", this->_camera.getPosition());
+
+    Light light(glm::vec3(5.0f));
+
+    light.setAmbient(glm::vec3(0.2f));
+    light.setDiffuse(glm::vec3(0.5f));
+    light.setSpecular(glm::vec3(1.0f));
+
+    shader.setVector3f("light.position", light.getPosition());
+    shader.setVector3f("light.ambient", light.getAmbient());
+    shader.setVector3f("light.diffuse", light.getDiffuse());
+    shader.setVector3f("light.specular", light.getSpecular());
 
     for (Model &model : this->_models) {
         model.draw(shader);

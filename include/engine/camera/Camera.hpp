@@ -71,6 +71,8 @@ class Camera {
 
     glm::mat4 getProjectionMatrix();
 
+    glm::vec3 getPosition();
+
   private:
     const float _FIELD_OF_VIEW = 45.0f;
 

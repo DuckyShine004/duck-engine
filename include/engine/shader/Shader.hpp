@@ -17,7 +17,11 @@ class Shader {
     void use();
     void detach();
 
+    void setFloat(const GLchar *name, float value);
+
     void setInteger(const GLchar *name, int value);
+
+    void setVector3f(const GLchar *name, glm::vec3 vector);
 
     void setMatrix4fv(const GLchar *name, glm::mat4 matrix);
 

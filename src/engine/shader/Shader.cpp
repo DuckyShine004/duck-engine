@@ -110,10 +110,22 @@ void Shader::checkProgramLinkStatus() {
     }
 }
 
+void Shader::setFloat(const GLchar *name, float value) {
+    GLint location = glGetUniformLocation(this->_program, name);
+
+    glUniform1f(location, value);
+}
+
 void Shader::setInteger(const GLchar *name, int value) {
     GLint location = glGetUniformLocation(this->_program, name);
 
     glUniform1i(location, value);
+}
+
+void Shader::setVector3f(const GLchar *name, glm::vec3 vector) {
+    GLint location = glGetUniformLocation(this->_program, name);
+
+    glUniform3f(location, vector.x, vector.y, vector.z);
 }
 
 void Shader::setMatrix4fv(const GLchar *name, glm::mat4 matrix) {

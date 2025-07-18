@@ -71,7 +71,6 @@ void Camera::uploadViewProjection(Shader &shader) {
 }
 
 void Camera::uploadModelViewProjection(Shader &shader) {
-
     shader.setMatrix4fv("uModel", this->_mvp.model);
     shader.setMatrix4fv("uView", this->_mvp.view);
     shader.setMatrix4fv("uProjection", this->_mvp.projection);
@@ -139,6 +138,10 @@ glm::vec2 Camera::getCursorOffset(glm::vec2 cursorPosition) {
 
 glm::mat4 Camera::getProjectionMatrix() {
     return this->_mvp.projection;
+}
+
+glm::vec3 Camera::getPosition() {
+    return this->_position;
 }
 
 } // namespace engine::camera
