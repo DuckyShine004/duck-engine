@@ -106,6 +106,7 @@ void Camera::move(Direction direction, float deltaTime) {
     this->updateView();
 }
 
+// Use quaternions to rotate PROBABLY
 void Camera::rotate(glm::vec2 cursorPosition) {
     if (this->_lastCursorPosition.x == -1.0f && this->_lastCursorPosition.y == -1.0f) {
         this->_lastCursorPosition = cursorPosition;
@@ -136,8 +137,8 @@ glm::vec2 Camera::getCursorOffset(glm::vec2 cursorPosition) {
     return glm::vec2(offsetX, offsetY);
 }
 
-glm::mat4 Camera::getProjectionMatrix() {
-    return this->_mvp.projection;
+glm::vec3 Camera::getFront() {
+    return this->_viewComponents.front;
 }
 
 glm::vec3 Camera::getPosition() {

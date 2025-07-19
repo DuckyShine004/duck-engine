@@ -69,7 +69,7 @@ class Camera {
 
     void rotate(glm::vec2 cursorPosition);
 
-    glm::mat4 getProjectionMatrix();
+    glm::vec3 getFront();
 
     glm::vec3 getPosition();
 
