@@ -8,11 +8,7 @@ class Light {
   public:
     Light();
 
-    Light(glm::vec3 position);
-
     ~Light();
-
-    glm::vec3 getPosition();
 
     void setAmbient(glm::vec3 ambient);
     void setAmbient(float r, float g, float b);
@@ -30,8 +26,6 @@ class Light {
     glm::vec3 getSpecular();
 
   private:
-    glm::vec3 _position;
-
     glm::vec3 _ambient;
     glm::vec3 _diffuse;
     glm::vec3 _specular;

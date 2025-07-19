@@ -10,11 +10,30 @@ struct Material {
 
 struct Light {
     vec3 position;
+
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+};
+
+struct DirectionalLight {
     vec3 direction;
 
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
+};
+
+struct PointLight {
+    vec3 position;
+
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+
+    float constant;
+    float linear;
+    float quadratic;
 };
 
 in vec2 fTextureCoordinates;
@@ -61,12 +80,6 @@ vec4 calculatePhong() {
     vec3 ambient = calculateAmbient();
     vec3 diffuse = calculateDiffuse(normal, lightDirection);
     vec3 specular = calculateSpecular(normal, lightDirection);
-
-    // float diffuseStrength = max(dot(normal, lightDirection), 0.0);
-    // vec3 diffuse = lightColour * (diffuseStrength * material.diffuse);
-
-    // float spec = pow(max(dot(viewDirection, reflectionDirection), 0.0), material.shininess);
-    // vec3 specular = lightColour * (spec * material.specular);
 
     vec4 phong = vec4(ambient + diffuse + specular, 1.0);
 

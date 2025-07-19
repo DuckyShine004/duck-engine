@@ -1,6 +1,6 @@
 #include "engine/scene/Scene.hpp"
 
-#include "engine/light/Light.hpp"
+#include "engine/light/PointLight.hpp"
 
 #include "manager/shader/ShaderManager.hpp"
 
@@ -66,7 +66,7 @@ void Scene::render() {
     this->_camera.uploadModelViewProjection(shader);
     shader.setVector3f("uViewPosition", this->_camera.getPosition());
 
-    Light light(glm::vec3(5.0f));
+    PointLight light(glm::vec3(5.0f));
 
     light.setAmbient(glm::vec3(0.2f));
     light.setDiffuse(glm::vec3(0.5f));
