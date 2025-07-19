@@ -12,8 +12,8 @@ namespace engine::camera {
 
 Camera::Camera() : _position(glm::vec3(0.0f)) {
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    model = glm::scale(model, glm::vec3(0.05f));
+    // model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    // model = glm::scale(model, glm::vec3(0.1f));
     this->_mvp.model = model;
     this->_lastCursorPosition = glm::vec2(-1.0f, -1.0f);
 }
@@ -39,9 +39,10 @@ void Camera::updateView() {
 }
 
 void Camera::update(GLFWwindow *window, float deltaTime) {
-    // this->_mvp.model = glm::rotate(this->_mvp.model, glm::radians(50.0f) * deltaTime, glm::vec3(0.0f, 1.0f, 0.0f));
     float rotationSpeed = 20.0f;
-    this->_mvp.model = glm::rotate(this->_mvp.model, glm::radians(50.0f) * deltaTime * rotationSpeed, glm::vec3(0.0f, 0.0f, 1.0f));
+
+    this->_mvp.model = glm::rotate(this->_mvp.model, glm::radians(50.0f) * deltaTime * rotationSpeed, glm::vec3(0.0f, 1.0f, 0.0f));
+    // this->_mvp.model = glm::rotate(this->_mvp.model, glm::radians(50.0f) * deltaTime * rotationSpeed, glm::vec3(0.0f, 0.0f, 1.0f));
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
         this->move(FORWARD, deltaTime);

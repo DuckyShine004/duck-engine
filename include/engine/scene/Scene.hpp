@@ -6,6 +6,8 @@
 
 #include "engine/camera/Camera.hpp"
 
+#include "engine/sound/SoundSource.hpp"
+
 #include <GLFW/glfw3.h>
 
 #include <map>
@@ -15,6 +17,8 @@ using namespace engine::shader;
 using namespace engine::model;
 
 using namespace engine::camera;
+
+using namespace engine::sound;
 
 namespace engine::scene {
 
@@ -37,6 +41,8 @@ class Scene {
     std::map<std::string, Shader> _shaders;
 
     Camera _camera;
+
+    SoundSource _source;
 
     std::vector<Model> _models;
 };

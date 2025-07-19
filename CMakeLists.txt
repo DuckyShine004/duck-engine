@@ -17,8 +17,11 @@ file(GLOB_RECURSE QUATERNION_SOURCES
 find_package(PkgConfig REQUIRED)
 
 find_package(fmt REQUIRED)
+find_package(OpenAL REQUIRED)
 find_package(assimp REQUIRED)
 find_package(glfw3 3.3 REQUIRED)
+
+pkg_check_modules(SNDFILE REQUIRED sndfile)
 
 add_executable(quaternion ${QUATERNION_SOURCES})
 
@@ -37,9 +40,13 @@ target_link_libraries(quaternion
     fmt
     glfw
     assimp
+    OpenAL::OpenAL
+    ${SNDFILE_LIBRARIES}
 )
 
 target_link_libraries(quaternion
     PRIVATE
     fmt::fmt
+    ${OPENAL_LDFLAGS}
+    ${SNDFILE_LDFLAGS}
 )

@@ -169,5 +169,5 @@ void main() {
     vec4 phongLight = calculatePhongLight();
     vec4 spotLight = calculateSpotLight();
 
-    oFragmentColour = textureColour * phongLight;
+    oFragmentColour = textureColour * spotLight;
 }
