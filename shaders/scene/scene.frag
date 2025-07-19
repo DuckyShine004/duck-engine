@@ -167,6 +167,7 @@ void main() {
     vec4 textureColour = texture(texture_diffuse1, fTextureCoordinates);
 
     vec4 phongLight = calculatePhongLight();
+    vec4 spotLight = calculateSpotLight();
 
     oFragmentColour = textureColour * phongLight;
 }

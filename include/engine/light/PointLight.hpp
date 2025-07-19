@@ -1,6 +1,7 @@
 #pragma once
 
 #include "engine/light/Light.hpp"
+#include "engine/light/Attenuation.hpp"
 
 namespace engine::light {
 
@@ -15,12 +16,19 @@ class PointLight final : public Light {
 
     glm::vec3 getPosition();
 
+    void setAttenuation(Attenuation attenutation);
+    void setAttenuation(float constant, float linear, float quadratic);
+
+    Attenuation getAttenutation();
+
     void upload(Shader &shader) override;
 
   private:
-    const char *_NAME = "pointLight";
+    static constexpr const char *_NAME = "pointLight";
 
     glm::vec3 _position;
+
+    Attenuation _attenuation;
 };
 
 }; // namespace engine::light

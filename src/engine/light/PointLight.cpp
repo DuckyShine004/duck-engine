@@ -19,6 +19,18 @@ glm::vec3 PointLight::getPosition() {
     return this->_position;
 }
 
+void PointLight::setAttenuation(Attenuation attenuation) {
+    this->_attenuation = attenuation;
+}
+
+void PointLight::setAttenuation(float constant, float linear, float quadratic) {
+    this->setAttenuation(Attenuation{constant, linear, quadratic});
+}
+
+Attenuation PointLight::getAttenutation() {
+    return this->_attenuation;
+}
+
 void PointLight::upload(Shader &shader) {
     Light::upload(shader);
 

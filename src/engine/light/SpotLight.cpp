@@ -47,6 +47,18 @@ float SpotLight::getOuterCutoff() {
     return this->_outerCutoff;
 }
 
+void SpotLight::setAttenuation(Attenuation attenuation) {
+    this->_attenuation = attenuation;
+}
+
+void SpotLight::setAttenuation(float constant, float linear, float quadratic) {
+    this->setAttenuation(Attenuation{constant, linear, quadratic});
+}
+
+Attenuation SpotLight::getAttenuation() {
+    return this->_attenuation;
+}
+
 void SpotLight::upload(Shader &shader) {
     Light::upload(shader);
 
@@ -54,6 +66,10 @@ void SpotLight::upload(Shader &shader) {
 
     shader.setVector3f(name.c_str(), this->_position);
     shader.setVector3f(name.c_str(), this->_direction);
+
+    shader.setFloat(name.c_str(), this->_attenuation.constant);
+    shader.setFloat(name.c_str(), this->_attenuation.linear);
+    shader.setFloat(name.c_str(), this->_attenuation.quadratic);
 
     shader.setFloat(name.c_str(), this->_innerCutoff);
     shader.setFloat(name.c_str(), this->_outerCutoff);

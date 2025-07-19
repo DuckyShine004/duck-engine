@@ -20,7 +20,7 @@ class DirectionalLight final : public Light {
     void upload(Shader &shader) override;
 
   private:
-    const char *_NAME = "directionalLight";
+    static constexpr const char *_NAME = "directionalLight";
 
     glm::vec3 _direction;
 };

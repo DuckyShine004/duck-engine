@@ -1,6 +1,7 @@
 #pragma once
 
 #include "engine/light/Light.hpp"
+#include "engine/light/Attenuation.hpp"
 
 namespace engine::light {
 
@@ -28,13 +29,20 @@ class SpotLight final : public Light {
 
     float getOuterCutoff();
 
+    void setAttenuation(Attenuation attenuation);
+    void setAttenuation(float constant, float linear, float quadratic);
+
+    Attenuation getAttenuation();
+
     void upload(Shader &shader) override;
 
   private:
-    const char *_NAME = "flashLight";
+    static constexpr const char *_NAME = "flashLight";
 
     glm::vec3 _position;
     glm::vec3 _direction;
+
+    Attenuation _attenuation;
 
     float _innerCutoff;
     float _outerCutoff;
