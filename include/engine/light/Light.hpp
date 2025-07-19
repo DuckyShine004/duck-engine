@@ -1,12 +1,18 @@
 #pragma once
 
+#include "engine/shader/Shader.hpp"
+
 #include <glm/glm.hpp>
+
+#include <string>
+
+using namespace engine::shader;
 
 namespace engine::light {
 
 class Light {
   public:
-    Light();
+    Light(int id, std::string name);
 
     ~Light();
 
@@ -24,6 +30,15 @@ class Light {
     void setSpecular(float r, float g, float b);
 
     glm::vec3 getSpecular();
+
+    std::string getUniformName();
+
+    virtual void upload(Shader &shader);
+
+  protected:
+    int _id;
+
+    std::string _name;
 
   private:
     glm::vec3 _ambient;

@@ -7,7 +7,7 @@ namespace engine::light {
 // Expect cartesian coordinates
 class DirectionalLight final : public Light {
   public:
-    DirectionalLight(glm::vec3 direction);
+    DirectionalLight(int id, glm::vec3 direction);
 
     ~DirectionalLight();
 
@@ -17,7 +17,11 @@ class DirectionalLight final : public Light {
     void setSphericalDirection(glm::vec3 sphericalDirection);
     void setSphericalDirection(float rho, float theta, float phi);
 
+    void upload(Shader &shader) override;
+
   private:
+    const char *_NAME = "directionalLight";
+
     glm::vec3 _direction;
 };
 

@@ -2,7 +2,7 @@
 
 namespace engine::light {
 
-DirectionalLight::DirectionalLight(glm::vec3 direction) : _direction(direction) {
+DirectionalLight::DirectionalLight(int id, glm::vec3 direction) : Light(id, this->_NAME), _direction(direction) {
 }
 
 DirectionalLight::~DirectionalLight() = default;
@@ -27,6 +27,14 @@ void DirectionalLight::setSphericalDirection(glm::vec3 sphericalDirection) {
 
 void DirectionalLight::setSphericalDirection(float rho, float theta, float phi) {
     this->setSphericalDirection(glm::vec3(rho, theta, phi));
+}
+
+void DirectionalLight::upload(Shader &shader) {
+    Light::upload(shader);
+
+    std::string name = this->getUniformName();
+
+    shader.setVector3f(name.c_str(), this->_direction);
 }
 
 }; // namespace engine::light

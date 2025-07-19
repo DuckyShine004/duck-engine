@@ -8,6 +8,7 @@ struct Material {
     float shininess;
 };
 
+// Expect Phong lighting
 struct Light {
     vec3 position;
 
@@ -73,7 +74,7 @@ vec3 calculateSpecular(vec3 normal, vec3 lightDirection) {
     return specularIntensity * light.specular * material.specular;
 }
 
-vec4 calculatePhong() {
+vec4 calculatePhongLighting() {
     vec3 normal = normalize(fNormal);
     vec3 lightDirection = normalize(light.position - fFragmentPosition);
 
@@ -86,10 +87,23 @@ vec4 calculatePhong() {
     return phong;
 }
 
+vec4 calculateDirectionalLighting() {
+    vec3 normal = normalize(fNormal);
+    vec3 lightDirection = normalize(-light.position); // light.direction (we don't have it right now, implement later)
+
+    vec3 ambient = calculateAmbient();
+    vec3 diffuse = calculateDiffuse(normal, lightDirection);
+    vec3 specular = calculateSpecular(normal, lightDirection);
+
+    vec4 directionalLighting = vec4(ambient + diffuse + specular, 1.0);
+
+    return directionalLighting;
+}
+
 void main() {
     vec4 textureColour = texture(texture_diffuse1, fTextureCoordinates);
 
-    vec4 phong = calculatePhong();
+    vec4 phongLighting = calculatePhongLighting();
 
-    oFragmentColour = textureColour * phong;
+    oFragmentColour = textureColour * phongLighting;
 }

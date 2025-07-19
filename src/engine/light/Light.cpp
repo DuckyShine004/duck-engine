@@ -2,7 +2,8 @@
 
 namespace engine::light {
 
-Light::Light() = default;
+Light::Light(int id, std::string name) : _id(id), _name(name) {
+}
 
 Light::~Light() = default;
 
@@ -40,6 +41,18 @@ void Light::setSpecular(float r, float g, float b) {
 
 glm::vec3 Light::getSpecular() {
     return this->_specular;
+}
+
+std::string Light::getUniformName() {
+    return this->_name + '[' + std::to_string(this->_id) + ']';
+}
+
+void Light::upload(Shader &shader) {
+    std::string name = this->getUniformName();
+
+    shader.setVector3f(name.c_str(), this->_ambient);
+    shader.setVector3f(name.c_str(), this->_diffuse);
+    shader.setVector3f(name.c_str(), this->_specular);
 }
 
 } // namespace engine::light

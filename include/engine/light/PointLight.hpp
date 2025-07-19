@@ -6,7 +6,7 @@ namespace engine::light {
 
 class PointLight final : public Light {
   public:
-    PointLight(glm::vec3 position);
+    PointLight(int id, glm::vec3 position);
 
     ~PointLight();
 
@@ -15,7 +15,11 @@ class PointLight final : public Light {
 
     glm::vec3 getPosition();
 
+    void upload(Shader &shader) override;
+
   private:
+    const char *_NAME = "pointLight";
+
     glm::vec3 _position;
 };
 

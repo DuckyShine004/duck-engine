@@ -66,7 +66,7 @@ void Scene::render() {
     this->_camera.uploadModelViewProjection(shader);
     shader.setVector3f("uViewPosition", this->_camera.getPosition());
 
-    PointLight light(glm::vec3(5.0f));
+    PointLight light(0, glm::vec3(5.0f));
 
     light.setAmbient(glm::vec3(0.2f));
     light.setDiffuse(glm::vec3(0.5f));
