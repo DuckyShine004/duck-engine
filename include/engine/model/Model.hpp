@@ -18,6 +18,13 @@ class Model {
   public:
     Model(std::string path);
 
+    Model(std::string path, glm::vec3 position);
+
+    void setPosition(glm::vec3 position);
+    void setPosition(float x, float y, float z);
+
+    glm::vec3 getPosition();
+
     void draw(Shader &shader);
 
   private:
@@ -26,6 +33,8 @@ class Model {
     std::vector<Texture> _loadedTextures;
 
     std::string _directory;
+
+    glm::vec3 _position;
 
     void loadModel(std::string path);
 

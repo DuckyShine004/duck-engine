@@ -9,8 +9,24 @@
 
 namespace engine::model {
 
-Model::Model(std::string path) {
+Model::Model(std::string path) : _position(glm::vec3(0.0f)) {
     this->loadModel(path);
+}
+
+Model::Model(std::string path, glm::vec3 position) : _position(position) {
+    this->loadModel(path);
+}
+
+void Model::setPosition(glm::vec3 position) {
+    this->_position = position;
+}
+
+void Model::setPosition(float x, float y, float z) {
+    this->setPosition(glm::vec3(x, y, z));
+}
+
+glm::vec3 Model::getPosition() {
+    return this->_position;
 }
 
 void Model::draw(Shader &shader) {
