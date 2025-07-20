@@ -4,6 +4,9 @@
 
 namespace engine::math {
 
+Quaternion::Quaternion() : Quaternion(0.0f, 0.0f, 0.0f) {
+}
+
 // In the form of w + xi + yj + zk
 Quaternion::Quaternion(float x, float y, float z) {
     float roll = glm::radians(x);

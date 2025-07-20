@@ -9,6 +9,8 @@ namespace engine::math {
 // Using euler then transforming into quats
 class Quaternion {
   public:
+    Quaternion();
+
     Quaternion(float x, float y, float z);
 
     Quaternion(float w, float x, float y, float z);
@@ -72,4 +74,4 @@ class Quaternion {
     float _z;
 };
 
-}; // namespace engine::math
+} // namespace engine::math
