@@ -1,4 +1,8 @@
+#define GLM_ENABLE_EXPERIMENTAL
+
 #include "engine/math/Quaternion.hpp"
+
+#include <glm/gtx/quaternion.hpp>
 
 #include <sstream>
 
@@ -179,6 +183,24 @@ Quaternion Quaternion::inverse(Quaternion quaternion) {
     float lengthSquared = quaternion.lengthSquared();
 
     return (lengthSquared <= _EPSILON) ? conjugate : conjugate / lengthSquared;
+}
+
+Quaternion Quaternion::angleAxis(float angle, glm::vec3 axis) {
+    float theta = glm::radians(angle);
+
+    float cosTheta = glm::cos(theta / 2);
+    float sinTheta = glm::sin(theta / 2);
+
+    axis = glm::normalize(axis);
+
+    return Quaternion(cosTheta, axis * sinTheta);
+}
+
+// Perhaps skip conversion to glm quat and manually convert if performance is an issue
+glm::mat4 Quaternion::toMatrix(Quaternion quaternion) {
+    glm::quat q(quaternion._w, quaternion._x, quaternion._y, quaternion._z);
+
+    return glm::toMat4(q);
 }
 
 std::string Quaternion::toString(Quaternion quaternion) {

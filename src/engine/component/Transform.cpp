@@ -3,7 +3,7 @@
 namespace engine::component {
 
 // Explicit default initialisation to be safe
-Transform::Transform() : _position(0.0f), _rotation(0.0f, 0.0f, 0.0f), _scale(0.0f) {
+Transform::Transform() : _position(0.0f), _rotation(1.0f, 0.0f, 0.0f, 0.0f), _scale(1.0f) {
 }
 
 Transform::Transform(glm::vec3 position) : _position(position), _rotation(0.0f, 0.0f, 0.0f), _scale(0.0f) {

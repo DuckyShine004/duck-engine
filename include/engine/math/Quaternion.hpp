@@ -63,6 +63,11 @@ class Quaternion {
 
     static Quaternion inverse(Quaternion quaternion);
 
+    // Assume degrees
+    static Quaternion angleAxis(float angle, glm::vec3 axis);
+
+    static glm::mat4 toMatrix(Quaternion quaternion);
+
     static std::string toString(Quaternion quaternion);
 
   private:
