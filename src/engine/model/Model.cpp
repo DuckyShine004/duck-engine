@@ -1,11 +1,12 @@
-#include <assimp/Importer.hpp>
-#include <assimp/postprocess.h>
-
-#include <stb/stb_image.h>
+#include "external/stb/stb_image.h"
 
 #include "engine/model/Model.hpp"
 
 #include "logger/LoggerMacros.hpp"
+
+#include <assimp/Importer.hpp>
+
+#include <assimp/postprocess.h>
 
 namespace engine::model {
 

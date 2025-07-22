@@ -4,7 +4,12 @@
 
 #include <glm/gtx/quaternion.hpp>
 
+#include <cmath>
 #include <sstream>
+
+#ifndef M_PI_2f
+#define M_PI_2f (static_cast<float>(M_PI_2))
+#endif
 
 namespace engine::math {
 

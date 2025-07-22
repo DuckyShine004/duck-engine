@@ -2,13 +2,13 @@
 
 #include "external/glad/glad.h"
 
+#include "external/stb/stb_image.h"
+
 #include "application/Application.hpp"
 
 #include "manager/shader/ShaderManager.hpp"
 
 #include "logger/LoggerMacros.hpp"
-
-#include <stb/stb_image.h>
 
 #include <iostream>
 

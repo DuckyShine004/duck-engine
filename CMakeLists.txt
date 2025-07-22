@@ -5,9 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-if(APPLE)
-    list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/fmt")
-endif()
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 file(GLOB_RECURSE QUATERNION_SOURCES
     "${CMAKE_SOURCE_DIR}/src/*.cpp"
@@ -15,38 +13,30 @@ file(GLOB_RECURSE QUATERNION_SOURCES
 )
 
 find_package(PkgConfig REQUIRED)
-
 find_package(fmt REQUIRED)
-find_package(OpenAL REQUIRED)
+# find_package(OpenAL REQUIRED)
 find_package(assimp REQUIRED)
 find_package(glfw3 3.3 REQUIRED)
 
+pkg_check_modules(OPENAL REQUIRED openal)
 pkg_check_modules(SNDFILE REQUIRED sndfile)
 
 add_executable(quaternion ${QUATERNION_SOURCES})
 
-target_include_directories(quaternion
-    PRIVATE
+target_compile_definitions(quaternion PRIVATE GLFW_INCLUDE_NONE)
+
+target_include_directories(quaternion PRIVATE
+    ${OPENAL_INCLUDE_DIRS}
+    ${SNDFILE_INCLUDE_DIRS}
     ${CMAKE_SOURCE_DIR}/include
 )
 
-target_compile_definitions(quaternion
-    PRIVATE
-    GLFW_INCLUDE_NONE
-)
+find_library(OPENAL_FRAMEWORK OpenAL)
 
-target_link_libraries(quaternion
-    PRIVATE
-    fmt
+target_link_libraries(quaternion PRIVATE
     glfw
-    assimp
-    OpenAL::OpenAL
-    ${SNDFILE_LIBRARIES}
-)
-
-target_link_libraries(quaternion
-    PRIVATE
     fmt::fmt
+    assimp::assimp
     ${OPENAL_LDFLAGS}
     ${SNDFILE_LDFLAGS}
 )

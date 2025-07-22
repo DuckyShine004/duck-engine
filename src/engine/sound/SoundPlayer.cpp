@@ -1,6 +1,6 @@
-#include <engine/sound/SoundPlayer.hpp>
+#include "engine/sound/SoundPlayer.hpp"
 
-#include <logger/LoggerMacros.hpp>
+#include "logger/LoggerMacros.hpp"
 
 #include <AL/al.h>
 
